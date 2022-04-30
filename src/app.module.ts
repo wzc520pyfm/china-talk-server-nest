@@ -11,6 +11,9 @@ import { ErrorsInterceptor } from './core/interceptors/errors.interceptor';
 import { FileModule } from './feature/file/file.module';
 import { AuthModule } from './core/auth/auth.module';
 import { PhotoModule } from './feature/photo/photo.module';
+import { AndroidVersionModule } from './android-version/android-version.module';
+import { CollectionModule } from './collection/collection.module';
+import { QuestionModule } from './question/question.module';
 
 @Module({
   imports: [
@@ -30,6 +33,9 @@ import { PhotoModule } from './feature/photo/photo.module';
     FileModule,
     AuthModule,
     PhotoModule,
+    AndroidVersionModule,
+    CollectionModule,
+    QuestionModule,
   ],
   controllers: [AppController],
   providers: [
