@@ -10,8 +10,8 @@ import { Role } from 'src/common/enums/role.enum';
 import { User } from '../entities/user.entity';
 
 export class CreateUserDto extends PickType(User, [
-  'firstName',
-  'lastName',
+  'username',
+  'email',
   'phone',
   'password',
 ] as const) {
