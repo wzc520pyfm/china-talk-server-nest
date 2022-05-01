@@ -1,14 +1,16 @@
-import { Mark } from 'src/common/enums/mark.enum';
+import { ActionRecords } from 'src/common/entities/action-records.entity';
 import { QuestionClassification } from 'src/common/enums/question-classification.enum';
 import { State } from 'src/common/enums/state.enum';
+import { User } from 'src/feature/user/entities/user.entity';
 import {
   Column,
-  CreateDateColumn,
   Entity,
+  JoinColumn,
+  ManyToOne,
+  OneToMany,
   PrimaryGeneratedColumn,
-  UpdateDateColumn,
-  VersionColumn,
 } from 'typeorm';
+import { ScorePaper } from './score-paper.entity';
 
 /**
  * 试卷表
@@ -51,36 +53,26 @@ export class ExamPaper {
   })
   description: string;
 
-  @Column({
-    comment: '试卷创建人id',
-  })
-  creatorId: number;
+  @Column((type) => ActionRecords)
+  actionRecords: ActionRecords;
 
-  @Column({
-    comment: '修改人id',
+  // 创建人
+  @ManyToOne((type) => User, {
+    onDelete: 'CASCADE',
+    nullable: false,
   })
-  modifierId: number;
+  @JoinColumn({ name: 'creator_id' })
+  creator: User;
 
-  @CreateDateColumn({
-    comment: '创建时间',
+  // 修改人
+  @ManyToOne((type) => User, {
+    onDelete: 'CASCADE',
+    nullable: false,
   })
-  createTime: Date;
+  @JoinColumn({ name: 'modifier_id' })
+  modifier: User;
 
-  @UpdateDateColumn({
-    comment: '更新时间',
-  })
-  updateTime: Date;
-
-  @VersionColumn({
-    comment: '版本号',
-  })
-  version: any;
-
-  @Column({
-    type: 'enum',
-    enum: Mark,
-    default: Mark.NORMAL,
-    comment: '标记',
-  })
-  mark: Mark;
+  // 成绩记录
+  @OneToMany((type) => ScorePaper, (scorePapers) => scorePapers.examPaper)
+  scorePapers: ScorePaper;
 }

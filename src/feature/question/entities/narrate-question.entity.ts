@@ -1,14 +1,17 @@
+import { ActionRecords } from 'src/common/entities/action-records.entity';
 import { Mark } from 'src/common/enums/mark.enum';
 import { QuestionClassification } from 'src/common/enums/question-classification.enum';
 import { QuestionDifficulty } from 'src/common/enums/question-difficulty.enum';
+import { User } from 'src/feature/user/entities/user.entity';
 import {
   Column,
-  CreateDateColumn,
   Entity,
+  JoinColumn,
+  ManyToOne,
+  OneToOne,
   PrimaryGeneratedColumn,
-  UpdateDateColumn,
-  VersionColumn,
 } from 'typeorm';
+import { Question } from './question.entity';
 
 /**
  * 叙述题表
@@ -24,7 +27,7 @@ export class NarrateQuestion {
     Object.assign(this, partial);
   }
   @PrimaryGeneratedColumn({
-    comment: '问题id',
+    comment: '叙述题id',
   })
   id: number;
 
@@ -49,27 +52,10 @@ export class NarrateQuestion {
   content: string;
 
   @Column({
-    nullable: true,
-    comment: '内容资源id',
-  })
-  contentResourceId: number;
-
-  @Column({
     type: 'text',
     comment: '答案',
   })
   answer: string;
-
-  @Column({
-    nullable: true,
-    comment: '解答资源id',
-  })
-  answerResourceId: number;
-
-  @Column({
-    comment: '出题人id',
-  })
-  authorId: number;
 
   @Column({
     nullable: true,
@@ -84,31 +70,29 @@ export class NarrateQuestion {
   })
   analysis: string;
 
-  @Column({
-    comment: '修改人id',
-  })
-  modifierId: number;
+  @Column((type) => ActionRecords)
+  actionRecords: ActionRecords;
 
-  @CreateDateColumn({
-    comment: '创建时间',
+  // 问题记录
+  @OneToOne(() => Question, (question) => question.narrateQuestion, {
+    onDelete: 'CASCADE',
+    nullable: true,
   })
-  createTime: Date;
+  question: Question;
 
-  @UpdateDateColumn({
-    comment: '更新时间',
+  // 发布者
+  @ManyToOne((type) => User, {
+    onDelete: 'CASCADE',
+    nullable: false,
   })
-  updateTime: Date;
+  @JoinColumn({ name: 'author_id' })
+  author: User;
 
-  @VersionColumn({
-    comment: '版本号',
+  // 修改人
+  @ManyToOne((type) => User, {
+    onDelete: 'CASCADE',
+    nullable: false,
   })
-  version: any;
-
-  @Column({
-    type: 'enum',
-    enum: Mark,
-    default: Mark.NORMAL,
-    comment: '标记',
-  })
-  mark: Mark;
+  @JoinColumn({ name: 'modifier_id' })
+  modifier: User;
 }

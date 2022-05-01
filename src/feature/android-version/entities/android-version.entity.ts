@@ -1,11 +1,11 @@
-import { Mark } from 'src/common/enums/mark.enum';
+import { ActionRecords } from './../../../common/entities/action-records.entity';
+import { User } from 'src/feature/user/entities/user.entity';
 import {
   Column,
-  CreateDateColumn,
   Entity,
+  JoinColumn,
+  ManyToOne,
   PrimaryGeneratedColumn,
-  UpdateDateColumn,
-  VersionColumn,
 } from 'typeorm';
 
 /**
@@ -45,31 +45,14 @@ export class AndroidVersion {
   })
   description: string;
 
-  @Column({
-    comment: '修改人id',
-  })
-  modifierId: number;
+  @Column(type => ActionRecords)
+  actionRecords: ActionRecords;
 
-  @CreateDateColumn({
-    comment: '创建时间',
+  // 修改人信息
+  @ManyToOne((type) => User, {
+    onDelete: 'CASCADE',
+    nullable: false,
   })
-  createTime: Date;
-
-  @UpdateDateColumn({
-    comment: '更新时间',
-  })
-  updateTime: Date;
-
-  @VersionColumn({
-    comment: '版本号: 记录更新次数',
-  })
-  version: any;
-
-  @Column({
-    type: 'enum',
-    enum: Mark,
-    default: Mark.NORMAL,
-    comment: '标记',
-  })
-  mark: Mark;
+  @JoinColumn({ name: 'modifierId' }) // 自定义关系列名(默认是userId,此处将其改为modifierId), 如果不需要自定义关系列名, 可以省略@JoinColumn. (默认下, 将关联目标实体的主列, 如果需要关联其他列可以设置referencedColumnName: "name", 这样就会关联user实体的name列而不是id列)
+  user: User;
 }

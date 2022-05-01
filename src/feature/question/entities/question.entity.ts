@@ -1,13 +1,20 @@
-import { Mark } from 'src/common/enums/mark.enum';
-import { QuestionType } from 'src/common/enums/question-type.enum';
+import { ActionRecords } from 'src/common/entities/action-records.entity';
+import { AnswerResources } from 'src/feature/file/entities/answer-resources.entity';
+import { ContentResources } from 'src/feature/file/entities/content-resources.entity';
+import { Word } from 'src/feature/knowledge/entities/word.entity';
 import {
   Column,
-  CreateDateColumn,
   Entity,
+  JoinColumn,
+  JoinTable,
+  ManyToMany,
+  OneToMany,
+  OneToOne,
   PrimaryGeneratedColumn,
-  UpdateDateColumn,
-  VersionColumn,
 } from 'typeorm';
+import { JudgmentQuestion } from './judgment-question.entity';
+import { NarrateQuestion } from './narrate-question.entity';
+import { SelectQuestion } from './select-question.entity';
 
 /**
  * 问题表
@@ -20,42 +27,71 @@ import {
 })
 export class Question {
   @PrimaryGeneratedColumn({
-    comment: '问题id',
+    comment: '问题记录id',
   })
   id: number;
 
-  @Column({
-    type: 'enum',
-    enum: QuestionType,
-    comment: '问题类型',
-  })
-  type: QuestionType;
+  @Column((type) => ActionRecords)
+  actionRecords: ActionRecords;
 
-  @Column({
-    comment: '修改人id',
+  // 选择题
+  @OneToOne(() => SelectQuestion, (selectQuestion) => selectQuestion.question, {
+    onDelete: 'CASCADE',
+    nullable: true,
   })
-  modifierId: number;
+  @JoinColumn()
+  selectQuestion: SelectQuestion;
 
-  @CreateDateColumn({
-    comment: '创建时间',
-  })
-  createTime: Date;
+  // 判断题
+  @OneToOne(
+    () => JudgmentQuestion,
+    (judgmentQuestion) => judgmentQuestion.question,
+    {
+      onDelete: 'CASCADE',
+      nullable: true,
+    },
+  )
+  @JoinColumn()
+  judgmentQuestion: JudgmentQuestion;
 
-  @UpdateDateColumn({
-    comment: '更新时间',
-  })
-  updateTime: Date;
+  // 叙述题
+  @OneToOne(
+    () => NarrateQuestion,
+    (narrateQuestion) => narrateQuestion.question,
+    {
+      onDelete: 'CASCADE',
+      nullable: true,
+    },
+  )
+  @JoinColumn()
+  narrateQuestion: NarrateQuestion;
 
-  @VersionColumn({
-    comment: '版本号',
-  })
-  version: any;
+  // 内容资源
+  @OneToMany(
+    (type) => ContentResources,
+    (contentResources) => contentResources.question,
+    {
+      onDelete: 'CASCADE',
+      nullable: true,
+    },
+  )
+  @JoinColumn({ name: 'content_resources_id' })
+  contentResources: ContentResources;
 
-  @Column({
-    type: 'enum',
-    enum: Mark,
-    default: Mark.NORMAL,
-    comment: '标记',
-  })
-  mark: Mark;
+  // 解答资源
+  @OneToMany(
+    (type) => AnswerResources,
+    (answerResources) => answerResources.question,
+    {
+      onDelete: 'CASCADE',
+      nullable: true,
+    },
+  )
+  @JoinColumn({ name: 'answer_resources_id' })
+  answerResources: AnswerResources;
+
+  // 关键字词
+  @ManyToMany(() => Word, (words) => words.questions)
+  @JoinTable()
+  words: Array<Word>;
 }

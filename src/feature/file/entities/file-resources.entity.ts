@@ -1,29 +1,15 @@
-import { Mark } from 'src/common/enums/mark.enum';
-import {
-  Column,
-  CreateDateColumn,
-  Entity,
-  PrimaryGeneratedColumn,
-  UpdateDateColumn,
-  VersionColumn,
-} from 'typeorm';
+import { ActionRecords } from 'src/common/entities/action-records.entity';
+import { User } from 'src/feature/user/entities/user.entity';
+import { Column, JoinColumn, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
 
-@Entity({
-  name: 'file_resources',
-  orderBy: {
-    id: 'ASC',
-  },
-})
+/**
+ * 文件资源嵌入式实体
+ */
 export class FileResource {
   @PrimaryGeneratedColumn({
     comment: '文件资源id',
   })
   id: number;
-
-  @Column({
-    comment: '问题id',
-  })
-  questionId: number;
 
   @Column({
     comment: '文件资源名称',
@@ -46,31 +32,13 @@ export class FileResource {
   })
   path: string;
 
-  @Column({
-    comment: '修改人id',
-  })
-  modifierId: number;
+  @Column((type) => ActionRecords)
+  actionRecords: ActionRecords;
 
-  @CreateDateColumn({
-    comment: '创建时间',
+  // 修改人
+  @ManyToOne((type) => User, {
+    onDelete: 'CASCADE',
   })
-  createTime: Date;
-
-  @UpdateDateColumn({
-    comment: '更新时间',
-  })
-  updateTime: Date;
-
-  @VersionColumn({
-    comment: '版本号',
-  })
-  version: any;
-
-  @Column({
-    type: 'enum',
-    enum: Mark,
-    default: Mark.NORMAL,
-    comment: '标记',
-  })
-  mark: Mark;
+  @JoinColumn({ name: 'modifierUser' })
+  user: User;
 }

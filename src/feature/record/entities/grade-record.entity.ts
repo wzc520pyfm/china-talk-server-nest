@@ -1,11 +1,12 @@
-import { Mark } from 'src/common/enums/mark.enum';
+import { ActionRecords } from 'src/common/entities/action-records.entity';
+import { ExamPaper } from 'src/feature/paper/entities/exam-paper.entity';
+import { User } from 'src/feature/user/entities/user.entity';
 import {
   Column,
-  CreateDateColumn,
   Entity,
+  JoinColumn,
+  ManyToOne,
   PrimaryGeneratedColumn,
-  UpdateDateColumn,
-  VersionColumn,
 } from 'typeorm';
 
 /**
@@ -24,40 +25,26 @@ export class GradeRecord {
   id: number;
 
   @Column({
-    comment: '试卷id',
-  })
-  paperId: number;
-
-  @Column({
-    comment: '用户id',
-  })
-  userId: number;
-
-  @Column({
     comment: '成绩(只记录最高分)',
   })
   score: number;
 
-  @CreateDateColumn({
-    comment: '创建时间',
-  })
-  createTime: Date;
+  @Column((type) => ActionRecords)
+  actionRecords: ActionRecords;
 
-  @UpdateDateColumn({
-    comment: '更新时间',
+  // 试卷
+  @ManyToOne((type) => ExamPaper, {
+    onDelete: 'CASCADE',
+    nullable: false,
   })
-  updateTime: Date;
+  @JoinColumn()
+  examPaper: ExamPaper;
 
-  @VersionColumn({
-    comment: '版本号',
+  // 用户(答题者)
+  @ManyToOne((type) => User, {
+    onDelete: 'CASCADE',
+    nullable: false,
   })
-  version: any;
-
-  @Column({
-    type: 'enum',
-    enum: Mark,
-    default: Mark.NORMAL,
-    comment: '标记',
-  })
-  mark: Mark;
+  @JoinColumn()
+  user: User;
 }

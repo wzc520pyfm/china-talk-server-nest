@@ -1,9 +1,25 @@
-import { Mark } from 'src/common/enums/mark.enum';
-import { Column, CreateDateColumn, PrimaryGeneratedColumn } from 'typeorm';
+import { ActionRecords } from 'src/common/entities/action-records.entity';
+import { ExamPaper } from 'src/feature/paper/entities/exam-paper.entity';
+import { Question } from 'src/feature/question/entities/question.entity';
+import { User } from 'src/feature/user/entities/user.entity';
+import {
+  Column,
+  Entity,
+  JoinColumn,
+  ManyToOne,
+  OneToOne,
+  PrimaryGeneratedColumn,
+} from 'typeorm';
 
 /**
  * 题目收藏表
  */
+@Entity({
+  name: 'collection_question',
+  orderBy: {
+    id: 'ASC',
+  },
+})
 export class CollectionQuestion {
   constructor(partial: Partial<CollectionQuestion>) {
     Object.assign(this, partial);
@@ -13,31 +29,30 @@ export class CollectionQuestion {
   })
   id: number;
 
-  @Column({
-    comment: '问题id',
-  })
-  questionId: number;
+  @Column((type) => ActionRecords)
+  actionRecords: ActionRecords;
 
-  @Column({
-    comment: '用户id',
+  // 问题记录
+  @OneToOne(() => Question, {
+    onDelete: 'CASCADE',
+    nullable: false,
   })
-  userId: number;
+  @JoinColumn()
+  question: Question;
 
-  @Column({
-    comment: '试卷id',
+  // 用户
+  @ManyToOne(() => User, {
+    onDelete: 'CASCADE',
+    nullable: false,
   })
-  paperId: number;
+  @JoinColumn()
+  user: User;
 
-  @CreateDateColumn({
-    comment: '创建时间',
+  // 试卷
+  @OneToOne(() => ExamPaper, {
+    onUpdate: 'CASCADE',
+    onDelete: 'SET NULL',
   })
-  createTime: Date;
-
-  @Column({
-    type: 'enum',
-    enum: Mark,
-    default: Mark.NORMAL,
-    comment: '标记',
-  })
-  mark: Mark;
+  @JoinColumn()
+  examPaper: ExamPaper;
 }

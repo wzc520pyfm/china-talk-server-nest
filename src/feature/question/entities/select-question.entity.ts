@@ -1,14 +1,16 @@
-import { Mark } from '../../../common/enums/mark.enum';
 import {
   Column,
-  CreateDateColumn,
   Entity,
+  JoinColumn,
+  ManyToOne,
+  OneToOne,
   PrimaryGeneratedColumn,
-  UpdateDateColumn,
-  VersionColumn,
 } from 'typeorm';
 import { QuestionClassification } from 'src/common/enums/question-classification.enum';
 import { QuestionDifficulty } from 'src/common/enums/question-difficulty.enum';
+import { Question } from './question.entity';
+import { User } from 'src/feature/user/entities/user.entity';
+import { ActionRecords } from 'src/common/entities/action-records.entity';
 
 /**
  * 选择题表
@@ -24,7 +26,7 @@ export class SelectQuestion {
     Object.assign(this, partial);
   }
   @PrimaryGeneratedColumn({
-    comment: '问题id',
+    comment: '选择题id',
   })
   id: number;
 
@@ -47,12 +49,6 @@ export class SelectQuestion {
     comment: '问题内容',
   })
   content: string;
-
-  @Column({
-    nullable: true,
-    comment: '内容资源id',
-  })
-  contentResourceId: number;
 
   @Column({
     comment: '选项1',
@@ -95,17 +91,6 @@ export class SelectQuestion {
 
   @Column({
     nullable: true,
-    comment: '答案资源id',
-  })
-  answerResourceId: number;
-
-  @Column({
-    comment: '出题人id',
-  })
-  creatorId: number;
-
-  @Column({
-    nullable: true,
     comment: '提示',
   })
   tip: string;
@@ -117,31 +102,29 @@ export class SelectQuestion {
   })
   analysis: string;
 
-  @Column({
-    comment: '修改人id',
-  })
-  modifierId: number;
+  @Column((type) => ActionRecords)
+  actionRecords: ActionRecords;
 
-  @CreateDateColumn({
-    comment: '创建时间',
+  // 问题记录
+  @OneToOne(() => Question, (question) => question.selectQuestion, {
+    onDelete: 'CASCADE',
+    nullable: true,
   })
-  createTime: Date;
+  question: Question;
 
-  @UpdateDateColumn({
-    comment: '更新时间',
+  // 发布者
+  @ManyToOne((type) => User, {
+    onDelete: 'CASCADE',
+    nullable: false,
   })
-  updateTime: Date;
+  @JoinColumn({ name: 'author_id' })
+  author: User;
 
-  @VersionColumn({
-    comment: '版本号',
+  // 修改人
+  @ManyToOne((type) => User, {
+    onDelete: 'CASCADE',
+    nullable: false,
   })
-  version: any;
-
-  @Column({
-    type: 'enum',
-    enum: Mark,
-    default: Mark.NORMAL,
-    comment: '标记',
-  })
-  mark: Mark;
+  @JoinColumn({ name: 'modifier_id' })
+  modifier: User;
 }
