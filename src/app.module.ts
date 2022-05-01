@@ -10,10 +10,13 @@ import { APP_INTERCEPTOR } from '@nestjs/core';
 import { ErrorsInterceptor } from './core/interceptors/errors.interceptor';
 import { FileModule } from './feature/file/file.module';
 import { AuthModule } from './core/auth/auth.module';
-import { PhotoModule } from './feature/photo/photo.module';
-import { AndroidVersionModule } from './android-version/android-version.module';
-import { CollectionModule } from './collection/collection.module';
-import { QuestionModule } from './question/question.module';
+import { AndroidVersionModule } from './feature/android-version/android-version.module';
+import { CollectionModule } from './feature/collection/collection.module';
+import { QuestionModule } from './feature/question/question.module';
+import { PostModule } from './feature/post/post.module';
+import { PaperModule } from './feature/paper/paper.module';
+import { RecordModule } from './feature/record/record.module';
+import { KnowledgeModule } from './feature/knowledge/knowledge.module';
 
 @Module({
   imports: [
@@ -32,10 +35,13 @@ import { QuestionModule } from './question/question.module';
     UserModule,
     FileModule,
     AuthModule,
-    PhotoModule,
+    PostModule,
     AndroidVersionModule,
     CollectionModule,
     QuestionModule,
+    PaperModule,
+    RecordModule,
+    KnowledgeModule,
   ],
   controllers: [AppController],
   providers: [

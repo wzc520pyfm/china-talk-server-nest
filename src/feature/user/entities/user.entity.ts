@@ -5,15 +5,20 @@
 import { IsMobilePhone, IsNotEmpty } from 'class-validator';
 import { Role } from 'src/common/enums/role.enum';
 import { State } from 'src/common/enums/state.enum';
+import { Post } from 'src/feature/post/entities/post.entity';
 import {
   Column,
   CreateDateColumn,
   Entity,
+  OneToMany,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
   VersionColumn,
 } from 'typeorm';
 
+/**
+ * 用户表
+ */
 @Entity({
   name: 'user', // 数据库表名, 默认为类名
   orderBy: {
@@ -110,4 +115,10 @@ export class User {
     comment: '版本号',
   })
   version: any;
+
+  /**
+   * 定义关系: 一个user可以有多个post,那么就是一对多的关系
+   */
+  @OneToMany((type) => Post, (post) => post.user)
+  posts: Array<Post>;
 }
