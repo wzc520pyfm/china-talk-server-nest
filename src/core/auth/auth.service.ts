@@ -2,6 +2,7 @@ import { HttpException, Inject, Injectable } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { CryptoUtil } from 'src/common/utils/crypto.util';
 import { CreateUserDto } from 'src/feature/user/dto/create-user.dto';
+import { User } from 'src/feature/user/entities/user.entity';
 import { UserService } from 'src/feature/user/user.service';
 
 @Injectable()
@@ -33,5 +34,10 @@ export class AuthService {
   async register(createUserDto: CreateUserDto): Promise<void> {
     const { role, ...createUser } = createUserDto; // 不允许直接注册高级角色
     return await this.userService.createOne(createUser);
+  }
+
+  // 获取当前用户信息
+  async findOne(user: any): Promise<User> {
+    return await this.userService.findOne(user.id);
   }
 }

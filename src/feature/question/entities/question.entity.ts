@@ -1,3 +1,4 @@
+import { IsNotEmpty } from 'class-validator';
 import { ActionRecords } from 'src/common/entities/action-records.entity';
 import { AnswerResources } from 'src/feature/file/entities/answer-resources.entity';
 import { ContentResources } from 'src/feature/file/entities/content-resources.entity';
@@ -26,6 +27,10 @@ import { SelectQuestion } from './select-question.entity';
   },
 })
 export class Question {
+  constructor(partial: Partial<Question>) {
+    Object.assign(this, partial);
+  }
+
   @PrimaryGeneratedColumn({
     comment: '问题记录id',
   })
@@ -76,7 +81,7 @@ export class Question {
     },
   )
   @JoinColumn({ name: 'content_resources_id' })
-  contentResources: ContentResources;
+  contentResources: Array<ContentResources>;
 
   // 解答资源
   @OneToMany(
@@ -88,10 +93,11 @@ export class Question {
     },
   )
   @JoinColumn({ name: 'answer_resources_id' })
-  answerResources: AnswerResources;
+  answerResources: Array<AnswerResources>;
 
   // 关键字词
   @ManyToMany(() => Word, (words) => words.questions)
   @JoinTable()
+  @IsNotEmpty()
   words: Array<Word>;
 }

@@ -74,5 +74,5 @@ export class ExamPaper {
 
   // 成绩记录
   @OneToMany((type) => ScorePaper, (scorePapers) => scorePapers.examPaper)
-  scorePapers: ScorePaper;
+  scorePapers: Array<ScorePaper>;
 }

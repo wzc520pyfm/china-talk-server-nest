@@ -1,3 +1,4 @@
+import { IsNotEmpty, IsString } from 'class-validator';
 import { ActionRecords } from 'src/common/entities/action-records.entity';
 import { Question } from 'src/feature/question/entities/question.entity';
 import { User } from 'src/feature/user/entities/user.entity';
@@ -20,6 +21,10 @@ import {
   },
 })
 export class Word {
+  constructor(partial: Partial<Word>) {
+    Object.assign(this, partial);
+  }
+
   @PrimaryGeneratedColumn({
     comment: '字词id',
   })
@@ -28,6 +33,7 @@ export class Word {
   @Column({
     comment: '字词',
   })
+  @IsNotEmpty()
   word: string;
 
   @Column({
@@ -49,8 +55,10 @@ export class Word {
   explainEn: string;
 
   @Column({
+    nullable: true,
     comment: '拼音',
   })
+  @IsString()
   pinyin: string;
 
   @Column({

@@ -1,3 +1,4 @@
+import { WrongQuestionRecord } from './../../record/entities/wrong-question-record.entity';
 /**
  * User实体
  */
@@ -5,7 +6,9 @@
 import { IsMobilePhone, IsNotEmpty } from 'class-validator';
 import { Role } from 'src/common/enums/role.enum';
 import { State } from 'src/common/enums/state.enum';
+import { CollectionQuestion } from 'src/feature/collection/entities/collection-question.entity';
 import { Post } from 'src/feature/post/entities/post.entity';
+import { GradeRecord } from 'src/feature/record/entities/grade-record.entity';
 import {
   Column,
   CreateDateColumn,
@@ -121,4 +124,19 @@ export class User {
    */
   @OneToMany((type) => Post, (post) => post.user)
   posts: Array<Post>;
+
+  @OneToMany(
+    (type) => CollectionQuestion,
+    (collectionQuestions) => collectionQuestions.user,
+  )
+  collectionQuestions: Array<CollectionQuestion>;
+
+  @OneToMany((type) => GradeRecord, (gradeRecords) => gradeRecords.user)
+  gradeRecords: Array<GradeRecord>;
+
+  @OneToMany(
+    (type) => GradeRecord,
+    (wrongQuestionRecords) => wrongQuestionRecords.user,
+  )
+  wrongQuestionRecords: Array<WrongQuestionRecord>;
 }

@@ -11,6 +11,7 @@ import { QuestionDifficulty } from 'src/common/enums/question-difficulty.enum';
 import { Question } from './question.entity';
 import { User } from 'src/feature/user/entities/user.entity';
 import { ActionRecords } from 'src/common/entities/action-records.entity';
+import { IsNotEmpty } from 'class-validator';
 
 /**
  * 选择题表
@@ -35,6 +36,7 @@ export class SelectQuestion {
     enum: QuestionClassification,
     comment: '问题分类',
   })
+  @IsNotEmpty()
   questionClassification: QuestionClassification;
 
   @Column({
@@ -42,22 +44,26 @@ export class SelectQuestion {
     enum: QuestionDifficulty,
     comment: '问题难度',
   })
+  @IsNotEmpty()
   questionDifficulty: QuestionDifficulty;
 
   @Column({
     type: 'text',
     comment: '问题内容',
   })
+  @IsNotEmpty()
   content: string;
 
   @Column({
     comment: '选项1',
   })
+  @IsNotEmpty()
   option1: string;
 
   @Column({
     comment: '选项2',
   })
+  @IsNotEmpty()
   option2: string;
 
   @Column({
@@ -87,6 +93,7 @@ export class SelectQuestion {
   @Column({
     comment: '答案',
   })
+  @IsNotEmpty()
   answer: string;
 
   @Column({
@@ -108,8 +115,8 @@ export class SelectQuestion {
   // 问题记录
   @OneToOne(() => Question, (question) => question.selectQuestion, {
     onDelete: 'CASCADE',
-    nullable: true,
   })
+  @IsNotEmpty()
   question: Question;
 
   // 发布者

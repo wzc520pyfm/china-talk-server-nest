@@ -15,7 +15,7 @@ import { LocalStrategy } from './strategies/local.strategy';
     PassportModule,
     JwtModule.register({
       secret: jwtConstants.secret,
-      signOptions: { expiresIn: `${60 * 60}s` }, // 过期时间
+      signOptions: { expiresIn: `${24 * 60 * 60}s` }, // 过期时间
     }),
     CommonModule,
   ],

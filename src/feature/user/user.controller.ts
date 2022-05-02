@@ -6,6 +6,7 @@ import {
   Param,
   Post,
   Put,
+  Request,
   UseGuards,
 } from '@nestjs/common';
 import { Roles } from 'src/common/decorators/roles.decorator';
@@ -49,9 +50,11 @@ export class UserController {
    * 查询指定用户
    */
   @Get('/:id')
+  @Roles(Role.ADMIN)
   async getOne(@Param('id') id: number): Promise<Result> {
     const data = await this.userService.findOne(id);
-    return { code: 200, message: '获取成功', data };
+    const { password, ...user } = data;
+    return { code: 200, message: '获取成功', data: { user } };
   }
 
   /**

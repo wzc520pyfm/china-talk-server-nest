@@ -41,7 +41,7 @@ export class GradeRecord {
   examPaper: ExamPaper;
 
   // 用户(答题者)
-  @ManyToOne((type) => User, {
+  @ManyToOne((type) => User, (user) => user.gradeRecords, {
     onDelete: 'CASCADE',
     nullable: false,
   })

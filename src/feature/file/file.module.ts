@@ -1,14 +1,20 @@
 import { Module } from '@nestjs/common';
 import { MulterModule } from '@nestjs/platform-express';
+import { TypeOrmModule } from '@nestjs/typeorm';
 // import dayjs from 'dayjs';
 import * as dayjs from 'dayjs'; // 如果dayjs导入报错, 则使用这个导入方式
 import { diskStorage } from 'multer';
 import { extname } from 'path';
+import { CommonModule } from 'src/common/common.module';
+import { AnswerResources } from './entities/answer-resources.entity';
+import { ContentResources } from './entities/content-resources.entity';
 import { FileController } from './file.controller';
 import { FileService } from './file.service';
 
 @Module({
   imports: [
+    TypeOrmModule.forFeature([ContentResources, AnswerResources]),
+    CommonModule,
     MulterModule.register({
       storage: diskStorage({
         //自定义文件存储路径
@@ -71,5 +77,6 @@ import { FileService } from './file.service';
   ],
   controllers: [FileController],
   providers: [FileService],
+  exports: [TypeOrmModule, FileService],
 })
 export class FileModule {}

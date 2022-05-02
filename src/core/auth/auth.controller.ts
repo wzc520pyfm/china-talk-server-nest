@@ -6,10 +6,12 @@ import {
   Request,
   UsePipes,
   ValidationPipe,
+  Get,
 } from '@nestjs/common';
 import { Result } from 'src/common/interfaces/result.interface';
 import { CreateUserDto } from 'src/feature/user/dto/create-user.dto';
 import { AuthService } from './auth.service';
+import { JwtAuthGuard } from './guards/jwt-auth.guard';
 import { LocalAuthGuard } from './guards/local-auth.guard';
 
 @Controller('auth')
@@ -37,5 +39,16 @@ export class AuthController {
   ): Promise<Result> {
     await this.authService.register(createUserDto);
     return { code: 200, message: '注册成功' };
+  }
+
+  /**
+   * 查询当前用户
+   */
+  @UseGuards(JwtAuthGuard)
+  @Get('user')
+  async getUser(@Request() req: any): Promise<Result> {
+    const data = await this.authService.findOne(req.user.id);
+    const { password, ...user } = data;
+    return { code: 200, message: '获取成功', data: { user } };
   }
 }

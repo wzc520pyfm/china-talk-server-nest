@@ -41,7 +41,7 @@ export class CollectionQuestion {
   question: Question;
 
   // 用户
-  @ManyToOne(() => User, {
+  @ManyToOne(() => User, (user) => user.collectionQuestions, {
     onDelete: 'CASCADE',
     nullable: false,
   })

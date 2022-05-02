@@ -5,16 +5,22 @@
  */
 
 import { PickType } from '@nestjs/mapped-types';
-import { IsEnum, ValidateIf } from 'class-validator';
+import { IsEmail, IsEnum, IsString, ValidateIf } from 'class-validator';
 import { Role } from 'src/common/enums/role.enum';
 import { User } from '../entities/user.entity';
 
 export class CreateUserDto extends PickType(User, [
-  'username',
-  'email',
   'phone',
   'password',
 ] as const) {
+  @IsString()
+  @ValidateIf((o) => o?.role)
+  username?: string;
+
+  @IsEmail()
+  @ValidateIf((o) => o?.role)
+  email?: string;
+
   // 可以使用@IsEnum()装饰器来指定枚举类型
   @IsEnum(Role)
   @ValidateIf((o) => o?.role) // 条件验证, 只有当role存在时才验证

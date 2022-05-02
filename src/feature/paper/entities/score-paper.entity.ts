@@ -48,7 +48,7 @@ export class ScorePaper {
   modifier: User;
 
   // 试卷
-  @ManyToOne((type) => ExamPaper, {
+  @ManyToOne((type) => ExamPaper, (examPaper) => examPaper.scorePapers, {
     onDelete: 'CASCADE',
     nullable: false,
   })

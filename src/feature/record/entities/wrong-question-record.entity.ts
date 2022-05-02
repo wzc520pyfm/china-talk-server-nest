@@ -38,7 +38,7 @@ export class WrongQuestionRecord {
   examPaper: ExamPaper;
 
   // 用户
-  @ManyToOne((type) => User, {
+  @ManyToOne((type) => User, (user) => user.wrongQuestionRecords, {
     onDelete: 'CASCADE',
     nullable: false,
   })
