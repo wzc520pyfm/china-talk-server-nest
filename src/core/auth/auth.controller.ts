@@ -22,7 +22,11 @@ export class AuthController {
   @Post('login')
   async login(@Request() req: any) {
     const token = await this.authService.login(req.user);
-    return { code: 200, message: '登录成功', data: { token } };
+    return {
+      code: 200,
+      message: '登录成功',
+      data: { token: token.access_token },
+    };
   }
 
   //TODO 目前验证失败的返回稍有问题, 原因应该是自定义的错误拦截器和验证器抛出错误的兼容问题
