@@ -21,7 +21,7 @@ async function bootstrap() {
   // 如果遇到请求实体太大的问题, 可揭开下面的注释
   // app.use(json({ limit: '50mb' }));
   // app.use(urlencoded({ limit: '50mb', extended: true }));
-  await app.listen(3000);
+  await app.listen(5557);
   console.log(`Application is running on: ${await app.getUrl()}`);
 }
 bootstrap();
