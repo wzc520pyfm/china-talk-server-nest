@@ -18,7 +18,9 @@ export class JwtAuthGuard extends AuthGuard('jwt') {
   handleRequest(err, user, info) {
     // 可以抛出一个基于info或者err参数的异常
     if (err || !user) {
-      throw err || new UnauthorizedException();
+      throw (
+        err || new UnauthorizedException({ code: 401, message: '身份认证失败' })
+      );
     }
     return user;
   }

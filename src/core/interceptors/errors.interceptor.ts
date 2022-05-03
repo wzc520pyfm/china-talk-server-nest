@@ -4,6 +4,7 @@ import {
   HttpException,
   Injectable,
   NestInterceptor,
+  UnauthorizedException,
 } from '@nestjs/common';
 import { catchError, Observable } from 'rxjs';
 
