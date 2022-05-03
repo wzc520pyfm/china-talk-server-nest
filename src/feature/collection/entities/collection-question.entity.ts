@@ -49,10 +49,9 @@ export class CollectionQuestion {
   user: User;
 
   // 试卷
-  @OneToOne(() => ExamPaper, {
+  @ManyToOne(() => ExamPaper, {
     onUpdate: 'CASCADE',
     onDelete: 'SET NULL',
   })
-  @JoinColumn()
   examPaper: ExamPaper;
 }

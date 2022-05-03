@@ -76,6 +76,7 @@ export class User {
   @Column({
     type: 'varchar',
     length: 64,
+    select: false,
     comment: '用户密码',
   })
   // 值校验: 是否不为空

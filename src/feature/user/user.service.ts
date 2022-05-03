@@ -37,6 +37,14 @@ export class UserService {
     });
   }
 
+  async findOneByPhoneLogin(phone: string): Promise<User | undefined> {
+    return await this.usersRepository
+      .createQueryBuilder('user')
+      .addSelect('user.password') // 增加查询字段(密码), 因为密码字段设置为select:false, 基本查询模式下是不会返回的
+      .where('user.phone = :phone', { phone })
+      .getOne();
+  }
+
   async updateOne(id: number, updateUseDto: UpdateUserDto): Promise<void> {
     updateUseDto.password = this.cryptoUtil.encryptPassword(
       updateUseDto.password,

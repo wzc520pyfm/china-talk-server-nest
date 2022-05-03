@@ -15,7 +15,7 @@ export class AuthService {
 
   // 校验密码是否正确, 并返回用户信息(不包含密码)
   async validateUser(phone: string, pass: string): Promise<any> {
-    const user = await this.userService.findOneByPhone(phone);
+    const user = await this.userService.findOneByPhoneLogin(phone);
     if (!user) throw new HttpException('登录账号有误', 406);
     if (!this.cryptoUtil.checkPassword(pass, user.password))
       throw new HttpException('登录密码有误', 406);

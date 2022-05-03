@@ -22,6 +22,10 @@ import { ScorePaper } from './score-paper.entity';
   },
 })
 export class ExamPaper {
+  constructor(partial: Partial<ExamPaper>) {
+    Object.assign(this, partial);
+  }
+
   @PrimaryGeneratedColumn({
     comment: '试卷id',
   })

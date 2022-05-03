@@ -18,6 +18,10 @@ import { ExamPaper } from './exam-paper.entity';
   },
 })
 export class ScorePaper {
+  constructor(partial: Partial<ScorePaper>) {
+    Object.assign(this, partial);
+  }
+
   @PrimaryGeneratedColumn({
     comment: '分值记录id',
   })
@@ -52,7 +56,6 @@ export class ScorePaper {
     onDelete: 'CASCADE',
     nullable: false,
   })
-  @JoinColumn()
   examPaper: ExamPaper;
 
   // 问题记录
