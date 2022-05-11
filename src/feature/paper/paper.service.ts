@@ -29,6 +29,7 @@ export class PaperService {
     examPaper.description = '随机生成一份模拟试卷';
     examPaper.type = QuestionClassification.HSK_MOCK;
     examPaper.status = State.ENABLE;
+    examPaper.timeLimit = 60;
     examPaper.creator = user;
     examPaper.modifier = user;
     for (let i = 0; i < 10; i++) {
@@ -41,6 +42,8 @@ export class PaperService {
       scorePaper.modifier = user;
       scorePapers.push(scorePaper);
     }
+    examPaper.total = 10;
+    examPaper.totalScore = 10 * 10;
     examPaper.scorePapers = scorePapers;
     const result = await this.examPaperRepository.save(examPaper);
     const scorePapersSave = [];
@@ -52,10 +55,16 @@ export class PaperService {
     return result;
   }
 
+  /**
+   * 查询所有试卷
+   */
   async findAll(): Promise<Array<ExamPaper>> {
     return await this.examPaperRepository.find();
   }
 
+  /**
+   * 查询指定id的试卷
+   */
   async findOne(id: number): Promise<ExamPaper> {
     return await this.examPaperRepository
       .createQueryBuilder('exam_paper')
@@ -90,6 +99,9 @@ export class PaperService {
       .getOne();
   }
 
+  /**
+   * 查询所有HSK模拟试卷
+   */
   async findAllHskMocks(): Promise<Array<ExamPaper>> {
     return await this.examPaperRepository.find({
       where: {
@@ -98,6 +110,24 @@ export class PaperService {
           mark: Mark.NORMAL,
         },
       },
+    });
+  }
+
+  /**
+   * 查询当前用户做过的所有HSK模拟试卷并携带当前用户答题记录的最高分
+   */
+  async findAllHskMocksWithUserScore(user: User): Promise<Array<ExamPaper>> {
+    return await this.examPaperRepository.find({
+      where: {
+        type: QuestionClassification.HSK_MOCK,
+        actionRecords: {
+          mark: Mark.NORMAL,
+        },
+        gradeRecords: {
+          user: { id: user.id },
+        },
+      },
+      relations: ['gradeRecords'],
     });
   }
 }

@@ -59,7 +59,7 @@ export class ScorePaper {
   examPaper: ExamPaper;
 
   // 问题记录
-  @OneToOne((type) => Question, {
+  @ManyToOne((type) => Question, {
     nullable: false,
   })
   @JoinColumn()

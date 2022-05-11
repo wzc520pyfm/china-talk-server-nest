@@ -33,7 +33,7 @@ export class GradeRecord {
   actionRecords: ActionRecords;
 
   // 试卷
-  @ManyToOne((type) => ExamPaper, {
+  @ManyToOne((type) => ExamPaper, (examPaper) => examPaper.gradeRecords, {
     onDelete: 'CASCADE',
     nullable: false,
   })

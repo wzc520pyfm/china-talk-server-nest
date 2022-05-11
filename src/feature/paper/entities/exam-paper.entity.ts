@@ -1,6 +1,7 @@
 import { ActionRecords } from 'src/common/entities/action-records.entity';
 import { QuestionClassification } from 'src/common/enums/question-classification.enum';
 import { State } from 'src/common/enums/state.enum';
+import { GradeRecord } from 'src/feature/record/entities/grade-record.entity';
 import { User } from 'src/feature/user/entities/user.entity';
 import {
   Column,
@@ -57,6 +58,24 @@ export class ExamPaper {
   })
   description: string;
 
+  @Column({
+    nullable: true,
+    comment: '总题数',
+  })
+  total: number;
+
+  @Column({
+    nullable: true,
+    comment: '限时(单位分钟)',
+  })
+  timeLimit: number;
+
+  @Column({
+    nullable: true,
+    comment: '总分',
+  })
+  totalScore: number;
+
   @Column((type) => ActionRecords)
   actionRecords: ActionRecords;
 
@@ -76,7 +95,11 @@ export class ExamPaper {
   @JoinColumn({ name: 'modifier_id' })
   modifier: User;
 
-  // 成绩记录
+  // 分值记录
   @OneToMany((type) => ScorePaper, (scorePapers) => scorePapers.examPaper)
   scorePapers: Array<ScorePaper>;
+
+  // 成绩记录
+  @OneToMany((type) => GradeRecord, (gradeRecords) => gradeRecords.examPaper)
+  gradeRecords: Array<GradeRecord>;
 }
