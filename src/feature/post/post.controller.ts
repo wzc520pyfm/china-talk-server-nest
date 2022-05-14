@@ -44,7 +44,7 @@ export class PostController {
   @UseGuards(AuthGuard('jwt'))
   async findAll(@Req() req: any): Promise<Result> {
     const posts = await this.postService.findAll(req.user.id);
-    return { code: 200, message: '查询成功', data: posts };
+    return { code: 200, message: '查询成功', data: { posts } };
   }
 
   /**
@@ -80,6 +80,6 @@ export class PostController {
       offset,
       limit,
     );
-    return { code: 200, message: '查询成功', data: posts };
+    return { code: 200, message: '查询成功', data: { posts } };
   }
 }

@@ -25,7 +25,7 @@ export class KnowledgeController {
   @Get('/words')
   async getAllWords(): Promise<Result> {
     const data = await this.knowledgeService.findAllWords();
-    return { code: 200, message: '获取成功', data };
+    return { code: 200, message: '获取成功', data: { words: data } };
   }
 
   /**
@@ -34,7 +34,7 @@ export class KnowledgeController {
   @Get('/words/:id')
   async getOneWord(@Param('id') id: number): Promise<Result> {
     const data = await this.knowledgeService.findOneWord(id);
-    return { code: 200, message: '获取成功', data };
+    return { code: 200, message: '获取成功', data: { word: data } };
   }
 
   /**

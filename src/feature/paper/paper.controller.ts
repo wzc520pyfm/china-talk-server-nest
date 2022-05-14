@@ -94,6 +94,7 @@ export class PaperController {
     return {
       code: 200,
       message: '查询成功',
+      // TODO 所有的接口都应该改为这种形式
       data: { papers },
     };
   }

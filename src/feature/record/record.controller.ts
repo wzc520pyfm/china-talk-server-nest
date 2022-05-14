@@ -56,7 +56,7 @@ export class RecordController {
     return {
       code: 200,
       message: '查询成功',
-      data: result,
+      data: { wrong: result },
     };
   }
 }

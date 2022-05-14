@@ -63,7 +63,7 @@ export class CollectionController {
     return {
       code: 200,
       message: '查询成功',
-      data: collectionQuestions,
+      data: { collectionQuestions },
     };
   }
 }
