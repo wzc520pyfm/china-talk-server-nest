@@ -1,10 +1,12 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
+import { omit } from 'lodash';
 import { Mark } from 'src/common/enums/mark.enum';
 import { QuestionClassification } from 'src/common/enums/question-classification.enum';
 import { State } from 'src/common/enums/state.enum';
 import { Connection, Repository } from 'typeorm';
 import { Question } from '../question/entities/question.entity';
+import { GradeRecord } from '../record/entities/grade-record.entity';
 import { User } from '../user/entities/user.entity';
 import { ExamPaper } from './entities/exam-paper.entity';
 import { ScorePaper } from './entities/score-paper.entity';
@@ -129,5 +131,43 @@ export class PaperService {
       },
       relations: ['gradeRecords'],
     });
+  }
+
+  /**
+   * 查询所有HSK模拟试卷并且携带当前用户答题记录的最高分
+   */
+  async findAllHskMocksWidthUserScoreAll(
+    user: User,
+  ): Promise<Array<ExamPaper>> {
+    const result = await this.examPaperRepository.find({
+      where: {
+        type: QuestionClassification.HSK_MOCK,
+        actionRecords: {
+          mark: Mark.NORMAL,
+        },
+      },
+      relations: ['gradeRecords', 'gradeRecords.user'],
+    });
+    // 对查询结果进行过滤, 试卷成绩只记录当前用户的最高分, 不返回其他用户的答题分数记录
+    await Promise.all(
+      result.map((item) => {
+        let fag = false;
+        for (let i = 0; i < item.gradeRecords.length; i++) {
+          if (item.gradeRecords[i].user.id === user.id) {
+            item.gradeRecords = [item.gradeRecords[i]];
+            item.gradeRecords = [
+              omit(item.gradeRecords[0], ['user']) as GradeRecord,
+            ];
+            fag = true;
+            break;
+          }
+        }
+        if (!fag) {
+          item.gradeRecords = [];
+        }
+        return item;
+      }),
+    );
+    return result;
   }
 }

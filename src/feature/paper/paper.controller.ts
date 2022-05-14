@@ -82,4 +82,19 @@ export class PaperController {
       data: papers,
     };
   }
+
+  /**
+   * 查询所有HSK模拟试卷并且携带当前用户答题记录的最高分
+   */
+  @Get('hskmocks/with-user-score/all')
+  async findAllHskMocksWithUserScoreAll(@Request() req: any): Promise<Result> {
+    const papers = await this.paperService.findAllHskMocksWidthUserScoreAll(
+      req.user,
+    );
+    return {
+      code: 200,
+      message: '查询成功',
+      data: papers,
+    };
+  }
 }
