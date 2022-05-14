@@ -147,6 +147,15 @@ export class PaperService {
         },
       },
       relations: ['gradeRecords', 'gradeRecords.user'],
+      select: [
+        'id',
+        'name',
+        'description',
+        'type',
+        'total',
+        'timeLimit',
+        'totalScore',
+      ],
     });
     // 对查询结果进行过滤, 试卷成绩只记录当前用户的最高分, 不返回其他用户的答题分数记录
     await Promise.all(
@@ -156,7 +165,10 @@ export class PaperService {
           if (item.gradeRecords[i].user.id === user.id) {
             item.gradeRecords = [item.gradeRecords[i]];
             item.gradeRecords = [
-              omit(item.gradeRecords[0], ['user']) as GradeRecord,
+              omit(item.gradeRecords[0], [
+                'user',
+                'actionRecords',
+              ]) as GradeRecord,
             ];
             fag = true;
             break;
