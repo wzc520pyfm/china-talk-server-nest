@@ -29,13 +29,13 @@ import { KnowledgeModule } from './feature/knowledge/knowledge.module';
      */
     TypeOrmModule.forRoot({
       type: 'mysql',
-      host: '119.45.102.83',
+      host: '127.0.0.1',
       port: 3306,
       username: 'root',
       password: 'wzc520pyf',
       database: 'china_talk_nest',
       entities: ['dist/feature/**/entities/*.entity{.ts,.js}'],
-      synchronize: true,
+      synchronize: false,
       autoLoadEntities: true,
     }),
     ServeStaticModule.forRoot({
