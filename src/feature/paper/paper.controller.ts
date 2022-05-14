@@ -38,7 +38,7 @@ export class PaperController {
     return {
       code: 200,
       message: '查询成功',
-      data: papers,
+      data: { papers },
     };
   }
 
@@ -51,7 +51,7 @@ export class PaperController {
     return {
       code: 200,
       message: '查询成功',
-      data: paper,
+      data: { paper },
     };
   }
 
@@ -64,7 +64,7 @@ export class PaperController {
     return {
       code: 200,
       message: '查询成功',
-      data: papers,
+      data: { papers },
     };
   }
 
@@ -79,7 +79,7 @@ export class PaperController {
     return {
       code: 200,
       message: '查询成功',
-      data: papers,
+      data: { papers },
     };
   }
 
@@ -94,7 +94,7 @@ export class PaperController {
     return {
       code: 200,
       message: '查询成功',
-      data: papers,
+      data: { papers },
     };
   }
 }
