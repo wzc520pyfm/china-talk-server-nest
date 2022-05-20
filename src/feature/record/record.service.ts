@@ -40,7 +40,10 @@ export class RecordService {
       gradeRecord.examPaper = examPaper;
       gradeRecord.user = user;
     }
-    gradeRecord.score = submitScore.score;
+    gradeRecord.score =
+      submitScore.score > gradeRecord.score
+        ? submitScore.score
+        : gradeRecord.score;
     await this.gradeRecordRepository.save(gradeRecord);
   }
 
