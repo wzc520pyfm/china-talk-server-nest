@@ -1,4 +1,9 @@
-import { HttpException, Inject, Injectable } from '@nestjs/common';
+import {
+  HttpException,
+  Inject,
+  Injectable,
+  NotAcceptableException,
+} from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { CryptoUtil } from 'src/common/utils/crypto.util';
 import { CreateUserDto } from 'src/feature/user/dto/create-user.dto';
@@ -16,9 +21,10 @@ export class AuthService {
   // 校验密码是否正确, 并返回用户信息(不包含密码)
   async validateUser(phone: string, pass: string): Promise<any> {
     const user = await this.userService.findOneByPhoneLogin(phone);
-    if (!user) throw new HttpException('登录账号有误', 406);
+    if (!user)
+      throw new NotAcceptableException({ code: 406, message: '登录账号有误' });
     if (!this.cryptoUtil.checkPassword(pass, user.password))
-      throw new HttpException('登录密码有误', 406);
+      throw new NotAcceptableException({ code: 406, message: '登录密码有误' });
     const { password, ...result } = user; // 解构赋值, result为去除password后的user
     return result;
   }
