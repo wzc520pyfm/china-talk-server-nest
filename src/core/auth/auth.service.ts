@@ -25,13 +25,11 @@ export class AuthService {
       throw new NotAcceptableException({
         code: 406,
         message: '登录账号有误',
-        data: [],
       });
     if (!this.cryptoUtil.checkPassword(pass, user.password))
       throw new NotAcceptableException({
         code: 406,
         message: '登录密码有误',
-        data: [],
       });
     const { password, ...result } = user; // 解构赋值, result为去除password后的user
     return result;

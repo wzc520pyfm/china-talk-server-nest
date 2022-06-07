@@ -41,7 +41,7 @@ export class RecordService {
       gradeRecord.user = user;
     }
     gradeRecord.score =
-      submitScore.score > gradeRecord.score
+      submitScore.score > (gradeRecord.score ?? 0)
         ? submitScore.score
         : gradeRecord.score;
     await this.gradeRecordRepository.save(gradeRecord);
