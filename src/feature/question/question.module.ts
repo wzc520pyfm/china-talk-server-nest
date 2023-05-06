@@ -10,12 +10,7 @@ import { QuestionService } from './question.service';
 
 @Module({
   imports: [
-    TypeOrmModule.forFeature([
-      Question,
-      JudgmentQuestion,
-      NarrateQuestion,
-      SelectQuestion,
-    ]),
+    TypeOrmModule.forFeature([Question, JudgmentQuestion, NarrateQuestion, SelectQuestion]),
     CommonModule,
   ],
   controllers: [QuestionController],

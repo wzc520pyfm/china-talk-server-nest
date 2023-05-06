@@ -1,12 +1,4 @@
-import {
-  Body,
-  Controller,
-  Get,
-  Param,
-  Post,
-  Request,
-  UseGuards,
-} from '@nestjs/common';
+import { Body, Controller, Get, Param, Post, Request, UseGuards } from '@nestjs/common';
 import { RolesGuard } from 'src/common/guard/roles.guard';
 import { Result } from 'src/common/interfaces/result.interface';
 import { JwtAuthGuard } from 'src/core/auth/guards/jwt-auth.guard';
@@ -41,10 +33,7 @@ export class KnowledgeController {
    * 创建一个字词
    */
   @Post('/words')
-  async createOneWord(
-    @Request() req: any,
-    @Body() createWordDto: CreateWordDto,
-  ): Promise<Result> {
+  async createOneWord(@Request() req: any, @Body() createWordDto: CreateWordDto): Promise<Result> {
     const word = new Word(createWordDto);
     word.author = req.user;
     word.modifier = req.user;

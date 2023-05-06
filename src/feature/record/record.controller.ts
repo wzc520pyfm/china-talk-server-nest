@@ -1,11 +1,4 @@
-import {
-  Body,
-  Controller,
-  Get,
-  Post,
-  Request,
-  UseGuards,
-} from '@nestjs/common';
+import { Body, Controller, Get, Post, Request, UseGuards } from '@nestjs/common';
 import { RolesGuard } from 'src/common/guard/roles.guard';
 import { Result } from 'src/common/interfaces/result.interface';
 import { JwtAuthGuard } from 'src/core/auth/guards/jwt-auth.guard';
@@ -21,10 +14,7 @@ export class RecordController {
    * 提交成绩
    */
   @Post('/score')
-  async submitScore(
-    @Request() req: any,
-    @Body() submitScore: SubmitScore,
-  ): Promise<Result> {
+  async submitScore(@Request() req: any, @Body() submitScore: SubmitScore): Promise<Result> {
     await this.recordService.submitScore(req.user, submitScore);
     return {
       code: 200,

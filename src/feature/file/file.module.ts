@@ -37,10 +37,7 @@ import { FileService } from './file.service';
       fileFilter: function (req, file, cb) {
         const /** !Map<RegExp, Array<string>> */ field = new Map([
             [/^(image){1}(s?)$/, ['.png', '.jpg', '.jpeg', '.gif', '.bmp']],
-            [
-              /^(file){1}(s?)$/,
-              ['.xls', '.xlsx', '.xlsm', '.doc', '.docx', '.pdf'],
-            ],
+            [/^(file){1}(s?)$/, ['.xls', '.xlsx', '.xlsm', '.doc', '.docx', '.pdf']],
             [
               /^(defaultFile)$/,
               [
@@ -58,9 +55,7 @@ import { FileService } from './file.service';
               ],
             ],
           ]);
-        const allowFile = [...field].filter(([key, value]) =>
-          key.test(file.fieldname),
-        )[0][1];
+        const allowFile = [...field].filter(([key, value]) => key.test(file.fieldname))[0][1];
         const extName = extname(file.originalname).toLowerCase();
         if (allowFile.includes(extName)) {
           cb(null, true);

@@ -24,10 +24,7 @@ export class PostController {
    */
   @Post()
   @UseGuards(AuthGuard('jwt'))
-  async createPost(
-    @Req() req: any,
-    @Body() createInput: PostEntity,
-  ): Promise<Result> {
+  async createPost(@Req() req: any, @Body() createInput: PostEntity): Promise<Result> {
     /**
      * 因为我们在实体中使用了级联,接着在下面为二者建立联系,就仅需要在service中save post即可, 否则post和user就需要分别save
      * see: https://github.com/typeorm/typeorm 中的 '使用级联自动保存相关对象'
@@ -74,12 +71,7 @@ export class PostController {
     // @Param() params: { title?: string; offset?: number; limit?: number },
   ): Promise<Result> {
     console.log(req.user.id, title, offset, limit);
-    const posts = await this.postService.findAllPostsAndLimit(
-      req.user.id,
-      title,
-      offset,
-      limit,
-    );
+    const posts = await this.postService.findAllPostsAndLimit(req.user.id, title, offset, limit);
     return { code: 200, message: '查询成功', data: { posts } };
   }
 }

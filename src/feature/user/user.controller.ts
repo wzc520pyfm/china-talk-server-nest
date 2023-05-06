@@ -61,10 +61,7 @@ export class UserController {
    * 更新指定用户
    */
   @Put('/:id')
-  async updateOne(
-    @Param('id') id: number,
-    @Body() updateUserDto: UpdateUserDto,
-  ): Promise<Result> {
+  async updateOne(@Param('id') id: number, @Body() updateUserDto: UpdateUserDto): Promise<Result> {
     await this.userService.updateOne(id, updateUserDto);
     return { code: 200, message: '更新成功' };
   }

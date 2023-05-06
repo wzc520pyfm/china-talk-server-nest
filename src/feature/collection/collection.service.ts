@@ -20,10 +20,7 @@ export class CollectionService {
   /**
    * 收藏题目
    */
-  async collectQuestion(
-    user: User,
-    collectionQuestionDto: CollectionQuestionDto,
-  ): Promise<void> {
+  async collectQuestion(user: User, collectionQuestionDto: CollectionQuestionDto): Promise<void> {
     const examPaper = await this.examPaperRepository.findOneBy({
       id: collectionQuestionDto.examPaperId,
     });

@@ -1,11 +1,4 @@
-import {
-  Body,
-  Controller,
-  Get,
-  Post,
-  Request,
-  UseGuards,
-} from '@nestjs/common';
+import { Body, Controller, Get, Post, Request, UseGuards } from '@nestjs/common';
 import { RolesGuard } from 'src/common/guard/roles.guard';
 import { Result } from 'src/common/interfaces/result.interface';
 import { JwtAuthGuard } from 'src/core/auth/guards/jwt-auth.guard';
@@ -25,10 +18,7 @@ export class CollectionController {
     @Request() req: any,
     @Body() collectionQuestionDto: CollectionQuestionDto,
   ): Promise<Result> {
-    await this.collectionService.collectQuestion(
-      req.user,
-      collectionQuestionDto,
-    );
+    await this.collectionService.collectQuestion(req.user, collectionQuestionDto);
     return {
       code: 200,
       message: '收藏成功',
@@ -43,10 +33,7 @@ export class CollectionController {
     @Request() req: any,
     @Body('collectionQuestionId') collectionQuestionId: number,
   ): Promise<Result> {
-    await this.collectionService.cancelCollectQuestion(
-      req.user,
-      collectionQuestionId,
-    );
+    await this.collectionService.cancelCollectQuestion(req.user, collectionQuestionId);
     return {
       code: 200,
       message: '取消收藏成功',
@@ -58,8 +45,7 @@ export class CollectionController {
    */
   @Get('question/list')
   async listCollectedQuestion(@Request() req: any): Promise<Result> {
-    const collectionQuestions =
-      await this.collectionService.listCollectedQuestion(req.user);
+    const collectionQuestions = await this.collectionService.listCollectedQuestion(req.user);
     return {
       code: 200,
       message: '查询成功',

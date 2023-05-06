@@ -1,11 +1,4 @@
-import {
-  Controller,
-  Get,
-  Param,
-  Post,
-  Request,
-  UseGuards,
-} from '@nestjs/common';
+import { Controller, Get, Param, Post, Request, UseGuards } from '@nestjs/common';
 import { RolesGuard } from 'src/common/guard/roles.guard';
 import { Result } from 'src/common/interfaces/result.interface';
 import { JwtAuthGuard } from 'src/core/auth/guards/jwt-auth.guard';
@@ -73,9 +66,7 @@ export class PaperController {
    */
   @Get('hskmocks/with-user-score')
   async findAllHskMocksWithUserScore(@Request() req: any): Promise<Result> {
-    const papers = await this.paperService.findAllHskMocksWithUserScore(
-      req.user,
-    );
+    const papers = await this.paperService.findAllHskMocksWithUserScore(req.user);
     return {
       code: 200,
       message: '查询成功',
@@ -88,9 +79,7 @@ export class PaperController {
    */
   @Get('hskmocks/with-user-score/all')
   async findAllHskMocksWithUserScoreAll(@Request() req: any): Promise<Result> {
-    const papers = await this.paperService.findAllHskMocksWidthUserScoreAll(
-      req.user,
-    );
+    const papers = await this.paperService.findAllHskMocksWidthUserScoreAll(req.user);
     return {
       code: 200,
       message: '查询成功',

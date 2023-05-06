@@ -2,13 +2,7 @@ import { ActionRecords } from 'src/common/entities/action-records.entity';
 import { ExamPaper } from 'src/feature/paper/entities/exam-paper.entity';
 import { Question } from 'src/feature/question/entities/question.entity';
 import { User } from 'src/feature/user/entities/user.entity';
-import {
-  Column,
-  Entity,
-  JoinColumn,
-  ManyToOne,
-  PrimaryGeneratedColumn,
-} from 'typeorm';
+import { Column, Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
 
 @Entity({
   name: 'wrong_question_record',

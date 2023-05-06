@@ -1,12 +1,6 @@
 import { ActionRecords } from './../../../common/entities/action-records.entity';
 import { User } from 'src/feature/user/entities/user.entity';
-import {
-  Column,
-  Entity,
-  JoinColumn,
-  ManyToOne,
-  PrimaryGeneratedColumn,
-} from 'typeorm';
+import { Column, Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
 
 /**
  * 安卓应用版本记录表
@@ -45,7 +39,7 @@ export class AndroidVersion {
   })
   description: string;
 
-  @Column(type => ActionRecords)
+  @Column((type) => ActionRecords)
   actionRecords: ActionRecords;
 
   // 修改人信息

@@ -1,9 +1,4 @@
-import {
-  Column,
-  CreateDateColumn,
-  UpdateDateColumn,
-  VersionColumn,
-} from 'typeorm';
+import { Column, CreateDateColumn, UpdateDateColumn, VersionColumn } from 'typeorm';
 import { Mark } from '../enums/mark.enum';
 
 export class ActionRecords {

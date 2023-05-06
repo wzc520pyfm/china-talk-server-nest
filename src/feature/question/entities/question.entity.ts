@@ -48,50 +48,34 @@ export class Question {
   selectQuestion: SelectQuestion;
 
   // 判断题
-  @OneToOne(
-    () => JudgmentQuestion,
-    (judgmentQuestion) => judgmentQuestion.question,
-    {
-      onDelete: 'CASCADE',
-      nullable: true,
-    },
-  )
+  @OneToOne(() => JudgmentQuestion, (judgmentQuestion) => judgmentQuestion.question, {
+    onDelete: 'CASCADE',
+    nullable: true,
+  })
   @JoinColumn()
   judgmentQuestion: JudgmentQuestion;
 
   // 叙述题
-  @OneToOne(
-    () => NarrateQuestion,
-    (narrateQuestion) => narrateQuestion.question,
-    {
-      onDelete: 'CASCADE',
-      nullable: true,
-    },
-  )
+  @OneToOne(() => NarrateQuestion, (narrateQuestion) => narrateQuestion.question, {
+    onDelete: 'CASCADE',
+    nullable: true,
+  })
   @JoinColumn()
   narrateQuestion: NarrateQuestion;
 
   // 内容资源
-  @OneToMany(
-    (type) => ContentResources,
-    (contentResources) => contentResources.question,
-    {
-      onDelete: 'CASCADE',
-      nullable: true,
-    },
-  )
+  @OneToMany((type) => ContentResources, (contentResources) => contentResources.question, {
+    onDelete: 'CASCADE',
+    nullable: true,
+  })
   @JoinColumn({ name: 'content_resources_id' })
   contentResources: Array<ContentResources>;
 
   // 解答资源
-  @OneToMany(
-    (type) => AnswerResources,
-    (answerResources) => answerResources.question,
-    {
-      onDelete: 'CASCADE',
-      nullable: true,
-    },
-  )
+  @OneToMany((type) => AnswerResources, (answerResources) => answerResources.question, {
+    onDelete: 'CASCADE',
+    nullable: true,
+  })
   @JoinColumn({ name: 'answer_resources_id' })
   answerResources: Array<AnswerResources>;
 

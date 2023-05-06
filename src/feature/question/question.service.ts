@@ -34,12 +34,7 @@ export class QuestionService {
           mark: Mark.NORMAL,
         },
       },
-      relations: [
-        'selectQuestion',
-        'judgmentQuestion',
-        'narrateQuestion',
-        'words',
-      ],
+      relations: ['selectQuestion', 'judgmentQuestion', 'narrateQuestion', 'words'],
     });
     if (!result) throw new Error('没有找到该题目');
     return result;
@@ -50,10 +45,7 @@ export class QuestionService {
    * @param words 选择题的词条
    * @param selectQuestion 选择题的内容
    */
-  async createOneSelect(
-    words: Array<Word>,
-    selectQuestion: SelectQuestion,
-  ): Promise<void> {
+  async createOneSelect(words: Array<Word>, selectQuestion: SelectQuestion): Promise<void> {
     const question = new Question({});
     question.selectQuestion = selectQuestion;
     question.words = words;

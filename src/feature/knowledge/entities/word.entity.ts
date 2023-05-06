@@ -2,14 +2,7 @@ import { IsNotEmpty, IsString } from 'class-validator';
 import { ActionRecords } from 'src/common/entities/action-records.entity';
 import { Question } from 'src/feature/question/entities/question.entity';
 import { User } from 'src/feature/user/entities/user.entity';
-import {
-  Column,
-  Entity,
-  JoinColumn,
-  ManyToMany,
-  ManyToOne,
-  PrimaryGeneratedColumn,
-} from 'typeorm';
+import { Column, Entity, JoinColumn, ManyToMany, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
 
 /**
  * 字词表

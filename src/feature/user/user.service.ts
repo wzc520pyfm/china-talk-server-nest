@@ -46,18 +46,14 @@ export class UserService {
   }
 
   async updateOne(id: number, updateUseDto: UpdateUserDto): Promise<void> {
-    updateUseDto.password = this.cryptoUtil.encryptPassword(
-      updateUseDto.password,
-    ); // 密码加密
+    updateUseDto.password = this.cryptoUtil.encryptPassword(updateUseDto.password); // 密码加密
     await this.usersRepository.update(id, updateUseDto);
   }
 
   async createOne(createUserDto: CreateUserDto): Promise<void> {
     const existing = await this.findOneByPhone(createUserDto.phone);
     if (existing) throw new HttpException('用户已存在', 409);
-    createUserDto.password = this.cryptoUtil.encryptPassword(
-      createUserDto.password,
-    ); // 密码加密
+    createUserDto.password = this.cryptoUtil.encryptPassword(createUserDto.password); // 密码加密
     await this.usersRepository.save(createUserDto); // 执行成功会返回一个User实体, 如果后续程序需要这个实体, 请添加return
   }
 

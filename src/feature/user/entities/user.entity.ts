@@ -126,18 +126,12 @@ export class User {
   @OneToMany((type) => Post, (post) => post.user)
   posts: Array<Post>;
 
-  @OneToMany(
-    (type) => CollectionQuestion,
-    (collectionQuestions) => collectionQuestions.user,
-  )
+  @OneToMany((type) => CollectionQuestion, (collectionQuestions) => collectionQuestions.user)
   collectionQuestions: Array<CollectionQuestion>;
 
   @OneToMany((type) => GradeRecord, (gradeRecords) => gradeRecords.user)
   gradeRecords: Array<GradeRecord>;
 
-  @OneToMany(
-    (type) => GradeRecord,
-    (wrongQuestionRecords) => wrongQuestionRecords.user,
-  )
+  @OneToMany((type) => GradeRecord, (wrongQuestionRecords) => wrongQuestionRecords.user)
   wrongQuestionRecords: Array<WrongQuestionRecord>;
 }

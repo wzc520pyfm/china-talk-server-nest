@@ -3,14 +3,7 @@ import { QuestionClassification } from 'src/common/enums/question-classification
 import { State } from 'src/common/enums/state.enum';
 import { GradeRecord } from 'src/feature/record/entities/grade-record.entity';
 import { User } from 'src/feature/user/entities/user.entity';
-import {
-  Column,
-  Entity,
-  JoinColumn,
-  ManyToOne,
-  OneToMany,
-  PrimaryGeneratedColumn,
-} from 'typeorm';
+import { Column, Entity, JoinColumn, ManyToOne, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
 import { ScorePaper } from './score-paper.entity';
 
 /**

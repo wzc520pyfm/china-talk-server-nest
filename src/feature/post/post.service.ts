@@ -36,9 +36,7 @@ export class PostService {
   /**
    * 查询指定用户的所有post并记录条数
    */
-  async findAllAndCount(
-    userId: number,
-  ): Promise<{ postsCount: number; posts: Post[] }> {
+  async findAllAndCount(userId: number): Promise<{ postsCount: number; posts: Post[] }> {
     const [posts, postsCount] = await this.postRepository.findAndCount({
       where: { user: { id: userId } },
     });

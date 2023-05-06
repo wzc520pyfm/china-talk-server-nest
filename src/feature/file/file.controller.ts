@@ -1,10 +1,4 @@
-import {
-  Body,
-  Controller,
-  Post,
-  UploadedFile,
-  UseInterceptors,
-} from '@nestjs/common';
+import { Body, Controller, Post, UploadedFile, UseInterceptors } from '@nestjs/common';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { Result } from 'src/common/interfaces/result.interface';
 import { UpLoadFileDto } from './dto/up-load-file.dto';

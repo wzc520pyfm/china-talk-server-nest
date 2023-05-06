@@ -9,10 +9,7 @@ import { IsEmail, IsEnum, IsString, ValidateIf } from 'class-validator';
 import { Role } from 'src/common/enums/role.enum';
 import { User } from '../entities/user.entity';
 
-export class CreateUserDto extends PickType(User, [
-  'phone',
-  'password',
-] as const) {
+export class CreateUserDto extends PickType(User, ['phone', 'password'] as const) {
   @IsString()
   @ValidateIf((o) => o?.role)
   username?: string;

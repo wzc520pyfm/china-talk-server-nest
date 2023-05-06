@@ -3,14 +3,7 @@ import { Mark } from 'src/common/enums/mark.enum';
 import { QuestionClassification } from 'src/common/enums/question-classification.enum';
 import { QuestionDifficulty } from 'src/common/enums/question-difficulty.enum';
 import { User } from 'src/feature/user/entities/user.entity';
-import {
-  Column,
-  Entity,
-  JoinColumn,
-  ManyToOne,
-  OneToOne,
-  PrimaryGeneratedColumn,
-} from 'typeorm';
+import { Column, Entity, JoinColumn, ManyToOne, OneToOne, PrimaryGeneratedColumn } from 'typeorm';
 import { Question } from './question.entity';
 
 /**

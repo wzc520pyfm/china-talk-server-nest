@@ -7,11 +7,7 @@ import { CollectionService } from './collection.service';
 import { CollectionQuestion } from './entities/collection-question.entity';
 
 @Module({
-  imports: [
-    TypeOrmModule.forFeature([CollectionQuestion]),
-    PaperModule,
-    CommonModule,
-  ],
+  imports: [TypeOrmModule.forFeature([CollectionQuestion]), PaperModule, CommonModule],
   controllers: [CollectionController],
   providers: [CollectionService],
   exports: [TypeOrmModule, CollectionService],

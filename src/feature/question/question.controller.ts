@@ -1,12 +1,4 @@
-import {
-  Body,
-  Controller,
-  Get,
-  Param,
-  Post,
-  Request,
-  UseGuards,
-} from '@nestjs/common';
+import { Body, Controller, Get, Param, Post, Request, UseGuards } from '@nestjs/common';
 import { Roles } from 'src/common/decorators/roles.decorator';
 import { Role } from 'src/common/enums/role.enum';
 import { RolesGuard } from 'src/common/guard/roles.guard';
@@ -52,10 +44,7 @@ export class QuestionController {
     const selectQuestion = new SelectQuestion(createSelectQuestionDto);
     selectQuestion.author = req.user;
     selectQuestion.modifier = req.user;
-    await this.questionService.createOneSelect(
-      createSelectQuestionDto.words,
-      selectQuestion,
-    );
+    await this.questionService.createOneSelect(createSelectQuestionDto.words, selectQuestion);
     return { code: 200, message: '创建成功' };
   }
 }

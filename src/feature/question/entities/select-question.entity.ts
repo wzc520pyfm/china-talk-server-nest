@@ -1,11 +1,4 @@
-import {
-  Column,
-  Entity,
-  JoinColumn,
-  ManyToOne,
-  OneToOne,
-  PrimaryGeneratedColumn,
-} from 'typeorm';
+import { Column, Entity, JoinColumn, ManyToOne, OneToOne, PrimaryGeneratedColumn } from 'typeorm';
 import { QuestionClassification } from 'src/common/enums/question-classification.enum';
 import { QuestionDifficulty } from 'src/common/enums/question-difficulty.enum';
 import { Question } from './question.entity';
