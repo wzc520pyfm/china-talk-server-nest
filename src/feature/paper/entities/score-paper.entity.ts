@@ -16,7 +16,7 @@ export class ScorePaper {
   }
 
   @PrimaryGeneratedColumn({
-    comment: '分值记录id',
+    comment: '题目分值记录id',
   })
   id: number;
 

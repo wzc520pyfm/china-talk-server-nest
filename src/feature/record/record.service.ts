@@ -78,7 +78,13 @@ export class RecordService {
   async getWrongQuestionList(user: User): Promise<Array<WrongQuestionRecord>> {
     const wrongQuestionRecords = await this.wrongQuestionRecordRepository.find({
       where: { user: { id: user.id } },
-      relations: ['question'],
+      relations: [
+        'question',
+        'question.selectQuestion',
+        'question.judgmentQuestion',
+        'question.narrateQuestion',
+        'examPaper',
+      ],
     });
     return wrongQuestionRecords;
   }
