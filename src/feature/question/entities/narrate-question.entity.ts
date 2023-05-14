@@ -5,6 +5,7 @@ import { QuestionDifficulty } from 'src/common/enums/question-difficulty.enum';
 import { User } from 'src/feature/user/entities/user.entity';
 import { Column, Entity, JoinColumn, ManyToOne, OneToOne, PrimaryGeneratedColumn } from 'typeorm';
 import { Question } from './question.entity';
+import { IsNotEmpty } from 'class-validator';
 
 /**
  * 叙述题表
@@ -29,6 +30,7 @@ export class NarrateQuestion {
     enum: QuestionClassification,
     comment: '问题分类',
   })
+  @IsNotEmpty()
   questionClassification: QuestionClassification;
 
   @Column({
@@ -36,18 +38,21 @@ export class NarrateQuestion {
     enum: QuestionDifficulty,
     comment: '问题难度',
   })
+  @IsNotEmpty()
   questionDifficulty: QuestionDifficulty;
 
   @Column({
     type: 'text',
     comment: '问题内容',
   })
+  @IsNotEmpty()
   content: string;
 
   @Column({
     type: 'text',
     comment: '答案',
   })
+  @IsNotEmpty()
   answer: string;
 
   @Column({

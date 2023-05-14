@@ -12,6 +12,10 @@ import { FileResource } from './file-resources.entity';
   },
 })
 export class ContentResources {
+  constructor(partial: Partial<ContentResources>) {
+    Object.assign(this, partial);
+  }
+
   @Column((type) => FileResource)
   fileResource: FileResource;
 

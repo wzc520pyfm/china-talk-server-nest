@@ -5,6 +5,8 @@ import { Connection, Repository } from 'typeorm';
 import { Word } from '../knowledge/entities/word.entity';
 import { Question } from './entities/question.entity';
 import { SelectQuestion } from './entities/select-question.entity';
+import { NarrateQuestion } from './entities/narrate-question.entity';
+import { QueryNarrateQuestionDto } from './dto/query-narrate-question.dto';
 
 @Injectable()
 export class QuestionService {
@@ -13,6 +15,8 @@ export class QuestionService {
     private questionsRepository: Repository<Question>,
     @InjectRepository(SelectQuestion)
     private selectQuestionsRepository: Repository<SelectQuestion>,
+    @InjectRepository(NarrateQuestion)
+    private narrateQuestionRepository: Repository<NarrateQuestion>,
     private connection: Connection,
   ) {}
 
@@ -40,6 +44,22 @@ export class QuestionService {
     return result;
   }
 
+  async findNarrateQuestions(query: QueryNarrateQuestionDto) {
+    const result = await this.questionsRepository.find({
+      where: {
+        narrateQuestion: {
+          questionClassification: query.questionClassification,
+          questionDifficulty: query.questionDifficulty,
+        },
+        actionRecords: {
+          mark: Mark.NORMAL,
+        },
+      },
+      relations: ['narrateQuestion', 'words', 'contentResources'],
+    });
+    return result;
+  }
+
   /**
    * 创建一道选择题
    * @param words 选择题的词条
@@ -51,5 +71,19 @@ export class QuestionService {
     question.words = words;
     await this.selectQuestionsRepository.save(selectQuestion);
     await this.questionsRepository.save(question);
+  }
+
+  /**
+   * 创建一道叙述题
+   * @param words 叙述题的词条
+   * @param selectQuestion 叙述题的内容
+   */
+  async createOneNarrate(words: Array<Word>, narrateQuestion: NarrateQuestion): Promise<Question> {
+    const question = new Question({});
+    question.narrateQuestion = narrateQuestion;
+    question.words = words;
+    await this.narrateQuestionRepository.save(narrateQuestion);
+    const result = await this.questionsRepository.save(question);
+    return result;
   }
 }

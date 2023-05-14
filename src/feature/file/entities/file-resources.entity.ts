@@ -6,6 +6,10 @@ import { Column, JoinColumn, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
  * 文件资源嵌入式实体
  */
 export class FileResource {
+  constructor(partial: Partial<FileResource>) {
+    Object.assign(this, partial);
+  }
+
   @PrimaryGeneratedColumn({
     comment: '文件资源id',
   })
@@ -15,6 +19,11 @@ export class FileResource {
     comment: '文件资源名称',
   })
   name: string;
+
+  @Column({
+    comment: '文件资源原始名称',
+  })
+  originalname: string;
 
   @Column({
     comment: '文件资源类型',

@@ -10,11 +10,13 @@ import { AnswerResources } from './entities/answer-resources.entity';
 import { ContentResources } from './entities/content-resources.entity';
 import { FileController } from './file.controller';
 import { FileService } from './file.service';
+import { QuestionModule } from '../question/question.module';
 
 @Module({
   imports: [
     TypeOrmModule.forFeature([ContentResources, AnswerResources]),
     CommonModule,
+    QuestionModule,
     MulterModule.register({
       storage: diskStorage({
         //自定义文件存储路径
