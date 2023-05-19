@@ -27,6 +27,7 @@ export class QuestionService {
           mark: Mark.NORMAL,
         },
       },
+      relations: ['selectQuestion', 'judgmentQuestion', 'narrateQuestion'],
     });
   }
 
@@ -38,7 +39,13 @@ export class QuestionService {
           mark: Mark.NORMAL,
         },
       },
-      relations: ['selectQuestion', 'judgmentQuestion', 'narrateQuestion', 'words'],
+      relations: [
+        'selectQuestion',
+        'judgmentQuestion',
+        'narrateQuestion',
+        'words',
+        'contentResources',
+      ],
     });
     if (!result) throw new Error('没有找到该题目');
     return result;
